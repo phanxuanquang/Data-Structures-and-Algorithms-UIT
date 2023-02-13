@@ -1,30 +1,41 @@
 #include <iostream>
 using namespace std;
 
-void import(int x[], int y);
-void print(int x[], int y);
+void input(int[], int);
+void ouput(int[], int);
 
-void k_delete(int x[], int& y);
-void max(int x[], int y);
-void min(int x[], int y);
+void deleteElementAtPositionK(int[], int&);
+void getMaxValue(int[], int);
+void getMinValue(int[], int);
 
-void minus_count(int x[], int y);
+void getMinusCount(int[], int);
 
-void negative_max(int x[], int y);
-void positive_min(int x[], int y);
+void getMaxMinusValue(int[], int);
+void getMinPositiveValue(int[], int);
 
-void x_find(int x[], int& y);
-void find_x(int x[], int y);
+void findValuesEqualToX(int[], int&);
+void countValuesEqualToX(int[], int);
+
+void printMenu();
+void choose(int[], int&);
 
 int main()
 {
-	int n, x;
+	int arrSize;
 	cout << "n = ";
-	cin >> n;
-	int* a = new int[n];
-	import(a, n);
+	cin >> arrSize;
+	system("cls");
 
-	cout << endl;
+	int* arr = new int[arrSize];
+
+	input(arr, arrSize);
+	system("cls");
+
+	choose(arr, arrSize);
+}
+
+void printMenu() {
+	cout << "\n--------------------------------------------------" << endl;
 	cout << "1. Xuat mang" << endl;
 	cout << "2. Xoa phan tu tai vi tri x trong mang" << endl;
 	cout << "3. Liet ke nhung phan tu co gia tri lon nhat trong mang" << endl;
@@ -34,163 +45,160 @@ int main()
 	cout << "7. Cho biet gia tri duong nho nhat trong mang" << endl;
 	cout << "8. Tim phan tu co gia tri bang x co hay khong trong mang" << endl;
 	cout << "9. Dem so phan tu co gia tri bang x trong mang" << endl;
-	cout << endl;
-
+	cout << "--------------------------------------------------" << endl;
+}
+void choose(int arr[], int& arrSize) {
+	printMenu();
+	int choice;
 	cout << "Nhap tuy chon: ";
-	cin >> x;
-	cout << endl;
+	cin >> choice;
+	system("cls");
 
-	while (x != 0)
+	while (choice != 0)
 	{
-		switch (x) {
+		switch (choice) {
 		case 1:
-			print(a,n);
+			ouput(arr, arrSize);
 			break;
 		case 2:
-			k_delete(a, n);
+			deleteElementAtPositionK(arr, arrSize);
 			break;
 		case 3:
-			max(a,n);
+			getMaxValue(arr, arrSize);
 			break;
 		case 4:
-			min(a,n);
+			getMinValue(arr, arrSize);
 			break;
 		case 5:
-			minus_count(a, n);
+			getMinusCount(arr, arrSize);
 			break;
 		case 6:
-			negative_max(a,n);
+			getMaxMinusValue(arr, arrSize);
 			break;
 		case 7:
-			negative_max(a, n);
+			getMaxMinusValue(arr, arrSize);
 			break;
 		case 8:
-			x_find(a, n);
+			findValuesEqualToX(arr, arrSize);
 			break;
 		case 9:
-			find_x(a, n);
+			countValuesEqualToX(arr, arrSize);
 			break;
 		default:
-			cout << "Khong ton tai lua chon" << endl << endl;
+			cout << "Khong ton tai lua chon" << endl;
 			break;
 		}
-		cout << "Nhap tuy chon: ";
-		cin >> x;
-		cout << endl;
+		choose(arr, arrSize);
 	}
 }
 
-void import(int x[], int y) {
-	cout << "Nhap mang co " << y << " phan tu: " << endl;
-	for (int i = 0; i < y; i++)
-		cin >> x[i];
+void input(int arr[], int arrSize) {
+	cout << "Nhap mang co " << arrSize << " phan tu: " << endl;
+	for (int i = 0; i < arrSize; i++)
+	{
+		cout << "a[" << i << "] = ";
+		cin >> arr[i];
+	}
 }
-
-void print(int x[], int y) {
+void ouput(int arr[], int arrSize) {
 	cout << "Mang nhap vao la: ";
-	for (int i = 0; i < y; i++)
-		cout << x[i] << " ";
-	cout << endl << endl;
+	for (int i = 0; i < arrSize; i++)
+		cout << arr[i] << " ";
 }
 
-void k_delete(int x[], int& y) {
+void deleteElementAtPositionK(int arr[], int& arrSize) {
 	cout << "k = ";
 	int k;
 	cin >> k;
+	system("cls");
 	cout << "Mang sau khi xoa phan tu tai vi tri thu " << k << " la: ";
-	if (y <= 0) {
+	if (arrSize <= 0) {
 		return;
 	}
 	if (k < 0)
 		k = 0;
-	else if (k >= y)
-		k = y - 1;
-	for (int i = k; i < y - 1; i++)
-		x[i] = x[i + 1];
-	--y;
-	for (int i = 0; i < y; i++)
-		cout << x[i] << " ";
-	cout << endl << endl;
+	else if (k >= arrSize)
+		k = arrSize - 1;
+	for (int i = k; i < arrSize - 1; i++)
+		arr[i] = arr[i + 1];
+	--arrSize;
+	for (int i = 0; i < arrSize; i++)
+		cout << arr[i] << " ";
 }
 
-void max(int x[], int y) {
-	int temp = x[0];
-	for (int i = 1; i < y; i++)
-		if (x[i] >= temp)
-			temp = x[i];
+void getMaxValue(int arr[], int arrSize) {
+	int temp = arr[0];
+	for (int i = 1; i < arrSize; i++)
+		if (arr[i] >= temp)
+			temp = arr[i];
 	cout << "Cac phan tu co gia tri lon nhat trong mang tai vi tri ";
-	for (int i = 0; i < y; i++)
-		if (x[i] == temp)
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] == temp)
 			cout << i << " ";
-	cout << endl << endl;
 }
 
-void min(int x[], int y) {
-	int temp = x[0];
-	for (int i = 1; i < y; i++)
-		if (x[i] < temp)
-			temp = x[i];
+void getMinValue(int arr[], int arrSize) {
+	int temp = arr[0];
+	for (int i = 1; i < arrSize; i++)
+		if (arr[i] < temp)
+			temp = arr[i];
 	cout << "Cac phan tu co gia tri nho nhat trong mang tai vi tri ";
-	for (int i = 0; i < y; i++)
-		if (x[i] == temp)
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] == temp)
 			cout << i << " ";
-	cout << endl << endl;
 }
 
-void minus_count(int x[], int y) {
+void getMinusCount(int arr[], int arrSize) {
 	int temp = 0;
-	for (int i = 0; i < y; i++)
-		if (x[i] < 0)
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] < 0)
 			temp++;
 	cout << "So phan tu am trong mang la " << temp;
-	cout << endl << endl;
 }
 
-void negative_max(int x[], int y) {
+void getMaxMinusValue(int arr[], int arrSize) {
 	cout << "Phan tu am lon nhat trong mang la ";
-	int temp = x[0];
-	for (int i = 0; i < y; i++)
-		if (x[i] > temp && x[i] < 0)
-			temp = x[i];
+	int temp = arr[0];
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] > temp && arr[i] < 0)
+			temp = arr[i];
 	cout << temp;
-	cout << endl << endl;
 }
 
-void positive_min(int x[], int y) {
+void getMinPositiveValue(int arr[], int arrSize) {
 	cout << "Phan tu dương nho nhat trong mang la ";
-	int temp = x[0];
-	for (int i = 1; i < y; i++)
-		if (x[i] < temp && x[i]>0)
-			temp = x[i];
+	int temp = arr[0];
+	for (int i = 1; i < arrSize; i++)
+		if (arr[i] < temp && arr[i]>0)
+			temp = arr[i];
 	cout << temp;
-	cout << endl << endl;
 }
 
-void x_find(int x[], int& y) {
+void findValuesEqualToX(int arr[], int& arrSize) {
 	cout << "x = ";
-	int k;
-	cin >> k;
-	for (int i = 0; i < y; i++)
-		if (x[i] == k)
+	int x;
+	cin >> x;
+	system("cls");
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] == x)
 		{
-			cout << "Phan tu co gia tri " << k << " co trong mang";
+			cout << "Phan tu co gia tri " << x << " co trong mang";
 			cout << endl << endl;
 			return;
 		}
-	cout << "Phan tu co gia tri " << k << " khong co trong mang";
-	cout << endl << endl;
+	cout << "Phan tu co gia tri " << x << " khong co trong mang";
 }
 
-void find_x(int x[], int y) {
+void countValuesEqualToX(int arr[], int arrSize) {
 	cout << "x = ";
-	int k;
-	cin >> k;
+	int x;
+	cin >> x;
+	system("cls");
 	int temp = 0;
-	for (int i = 0; i < y; i++)
-		if (x[i] == k)
+	for (int i = 0; i < arrSize; i++)
+		if (arr[i] == x)
 			temp++;
 	if (temp > 0)
-		cout << "So phan tu co gia tri " << k << " co trong mang la " << temp;
-	else cout << "Phan tu co gia tri " << k << " khong co trong mang";
-	cout << endl << endl;
+		cout << "So phan tu co gia tri " << x << " co trong mang la " << temp;
+	else cout << "Phan tu co gia tri " << x << " khong co trong mang";
 }
